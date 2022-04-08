@@ -1,5 +1,6 @@
 import pygame
 from settings import Settings
+from pygame.sprite import Group
 from ship import Ship
 import game_functions as gf
 
@@ -14,12 +15,17 @@ def run_game():
     pygame.display.set_caption("Alien Invasion")
     # Cria uma nave
     ship = Ship(ai_settings, screen)
+    # Cria um grupo no qual serão armazenados os projéteis
+    bullets = Group()
     # Inicia o laço principal do jogo
     while True:
         # Observa eventos do teclado e mouse
-        gf.check_events(ship)
+        gf.check_events(ai_settings, screen, ship, bullets)
         ship.update()
+        gf.update_bullets(bullets)
         # Redesenha a tela a cada passagem pelo laço e deixa a tela mais recente visivel
-        gf.update_screen(ai_settings, screen, ship)
+        gf.update_screen(ai_settings, screen, ship, bullets)
+
+
 run_game()
 
